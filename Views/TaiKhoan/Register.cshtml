@@ -1,0 +1,45 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="col-md-5 mx-auto mt-4">
+    <h3 class="mb-3">Đăng ký tài khoản</h3>
+
+    <form asp-action="Register" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="TenDangNhap" class="form-label"></label>
+            <input asp-for="TenDangNhap" class="form-control" />
+            <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="HoTen" class="form-label"></label>
+            <input asp-for="HoTen" class="form-control" />
+            <span asp-validation-for="HoTen" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="MatKhau" class="form-label"></label>
+            <input asp-for="MatKhau" class="form-control" />
+            <span asp-validation-for="MatKhau" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NhapLaiMatKhau" class="form-label"></label>
+            <input asp-for="NhapLaiMatKhau" class="form-control" />
+            <span asp-validation-for="NhapLaiMatKhau" class="text-danger"></span>
+        </div>
+
+        <button class="btn btn-primary">Đăng ký</button>
+        <a asp-action="Login" class="btn btn-link">Đã có tài khoản</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
