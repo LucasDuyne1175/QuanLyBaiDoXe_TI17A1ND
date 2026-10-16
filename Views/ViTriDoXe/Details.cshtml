@@ -1,0 +1,18 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.ViTriDoXe
+@{
+    ViewData["Title"] = "Chi tiết vị trí đỗ xe";
+    var isAdmin = Context.Session.GetString("VaiTro") == "Admin";
+}
+
+<h3 class="mb-3">Chi tiết vị trí @Model.TenViTri</h3>
+<dl class="row col-md-8">
+    <dt class="col-sm-4">Tên vị trí</dt><dd class="col-sm-8">@Model.TenViTri</dd>
+    <dt class="col-sm-4">Loại phương tiện</dt><dd class="col-sm-8">@Model.LoaiPhuongTien?.TenLoaiPhuongTien</dd>
+    <dt class="col-sm-4">Khu vực</dt><dd class="col-sm-8">@Model.KhuVuc</dd>
+    <dt class="col-sm-4">Tầng</dt><dd class="col-sm-8">@Model.Tang</dd>
+    <dt class="col-sm-4">Trạng thái</dt><dd class="col-sm-8">@Model.TrangThai</dd>
+    <dt class="col-sm-4">Mô tả</dt><dd class="col-sm-8">@(string.IsNullOrWhiteSpace(Model.MoTa) ? "(không có)" : Model.MoTa)</dd>
+</dl>
+
+@if (isAdmin) { <a asp-action="Edit" asp-route-id="@Model.MaViTri" class="btn btn-warning">Sửa</a> }
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

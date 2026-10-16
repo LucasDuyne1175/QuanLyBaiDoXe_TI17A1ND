@@ -1,0 +1,142 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.ViTriListViewModel
+@{
+    ViewData["Title"] = "Vị trí đỗ xe";
+    var isAdmin = Context.Session.GetString("VaiTro") == "Admin";
+
+    // Gom toàn bộ điều kiện hiện tại để link phân trang không làm mất bộ lọc
+    Dictionary<string, string> Route(int p)
+    {
+        var d = new Dictionary<string, string>();
+        if (!string.IsNullOrWhiteSpace(Model.Keyword)) d["keyword"] = Model.Keyword;
+        if (Model.MaLoai.HasValue) d["maLoai"] = Model.MaLoai.Value.ToString();
+        if (!string.IsNullOrEmpty(Model.KhuVuc)) d["khuVuc"] = Model.KhuVuc;
+        if (Model.Tang.HasValue) d["tang"] = Model.Tang.Value.ToString();
+        if (!string.IsNullOrEmpty(Model.TrangThai)) d["trangThai"] = Model.TrangThai;
+        d["sort"] = Model.Sort;
+        d["page"] = p.ToString();
+        return d;
+    }
+
+    int start = Math.Max(1, Model.Page - 2);
+    int end = Math.Min(Model.TotalPages, Model.Page + 2);
+}
+
+<h3 class="mb-3">@(isAdmin ? "Quản lý vị trí đỗ xe" : "Tra cứu vị trí đỗ xe")</h3>
+
+@if (TempData["Msg"] != null) { <div class="alert alert-success">@TempData["Msg"]</div> }
+@if (TempData["Err"] != null) { <div class="alert alert-danger">@TempData["Err"]</div> }
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <input name="keyword" value="@Model.Keyword" class="form-control" placeholder="Tìm tên vị trí, khu vực..." />
+    </div>
+    <div class="col-md-2">
+        <select name="maLoai" asp-items="Model.LoaiList" class="form-select">
+            <option value="">-- Loại xe --</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="khuVuc" asp-items="Model.KhuVucList" class="form-select">
+            <option value="">-- Khu vực --</option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <select name="tang" asp-items="Model.TangList" class="form-select">
+            <option value="">Tầng</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="trangThai" asp-items="Model.TrangThaiList" class="form-select">
+            <option value="">-- Trạng thái --</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="sort" class="form-select">
+            <option value="ten_asc" selected="@(Model.Sort == "ten_asc")">Tên A → Z</option>
+            <option value="ten_desc" selected="@(Model.Sort == "ten_desc")">Tên Z → A</option>
+            <option value="tang_asc" selected="@(Model.Sort == "tang_asc")">Tầng tăng dần</option>
+            <option value="tang_desc" selected="@(Model.Sort == "tang_desc")">Tầng giảm dần</option>
+        </select>
+    </div>
+    <div class="col-12 d-flex gap-2">
+        <button class="btn btn-primary">Tìm / Lọc</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Xóa bộ lọc</a>
+        @if (isAdmin)
+        {
+            <a asp-action="Create" class="btn btn-success ms-auto">+ Thêm vị trí</a>
+        }
+    </div>
+</form>
+
+<p class="text-muted">Tìm thấy <b>@Model.TotalItems</b> vị trí. Trang <b>@Model.Page</b> / @Model.TotalPages.</p>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Tên vị trí</th>
+            <th>Loại phương tiện</th>
+            <th>Khu vực</th>
+            <th>Tầng</th>
+            <th>Trạng thái</th>
+            <th>Mô tả</th>
+            <th style="width:200px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Items.Any())
+    {
+        <tr><td colspan="7" class="text-center text-muted">Không có vị trí nào phù hợp.</td></tr>
+    }
+    @foreach (var v in Model.Items)
+    {
+        var badge = v.TrangThai == "Còn trống" ? "bg-success"
+                  : v.TrangThai == "Đang sử dụng" ? "bg-warning text-dark" : "bg-secondary";
+        <tr>
+            <td><b>@v.TenViTri</b></td>
+            <td>@v.LoaiPhuongTien?.TenLoaiPhuongTien</td>
+            <td>@v.KhuVuc</td>
+            <td>@v.Tang</td>
+            <td><span class="badge @badge">@v.TrangThai</span></td>
+            <td>@v.MoTa</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@v.MaViTri" class="btn btn-sm btn-info">Chi tiết</a>
+                @if (isAdmin)
+                {
+                    <a asp-action="Edit" asp-route-id="@v.MaViTri" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@v.MaViTri" class="btn btn-sm btn-danger">Xóa</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-all-route-data="Route(Model.Page - 1)">« Trước</a>
+            </li>
+            @if (start > 1)
+            {
+                <li class="page-item"><a class="page-link" asp-action="Index" asp-all-route-data="Route(1)">1</a></li>
+                @if (start > 2) { <li class="page-item disabled"><span class="page-link">...</span></li> }
+            }
+            @for (int i = start; i <= end; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-all-route-data="Route(i)">@i</a>
+                </li>
+            }
+            @if (end < Model.TotalPages)
+            {
+                @if (end < Model.TotalPages - 1) { <li class="page-item disabled"><span class="page-link">...</span></li> }
+                <li class="page-item"><a class="page-link" asp-action="Index" asp-all-route-data="Route(Model.TotalPages)">@Model.TotalPages</a></li>
+            }
+            <li class="page-item @(Model.Page == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-all-route-data="Route(Model.Page + 1)">Sau »</a>
+            </li>
+        </ul>
+    </nav>
+}

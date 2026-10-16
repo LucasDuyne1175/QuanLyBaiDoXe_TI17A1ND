@@ -1,0 +1,38 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.ViTriDoXe
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="mb-3">
+    <label asp-for="TenViTri" class="form-label"></label>
+    <input asp-for="TenViTri" class="form-control" />
+    <span asp-validation-for="TenViTri" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="MaLoaiPhuongTien" class="form-label"></label>
+    <select asp-for="MaLoaiPhuongTien" asp-items="(SelectList)ViewBag.LoaiList" class="form-select">
+        <option value="0">-- Chọn loại phương tiện --</option>
+    </select>
+    <span asp-validation-for="MaLoaiPhuongTien" class="text-danger"></span>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="KhuVuc" class="form-label"></label>
+        <input asp-for="KhuVuc" class="form-control" />
+        <span asp-validation-for="KhuVuc" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="Tang" class="form-label"></label>
+        <input asp-for="Tang" type="number" min="1" max="10" class="form-control" />
+        <span asp-validation-for="Tang" class="text-danger"></span>
+    </div>
+</div>
+<div class="mb-3">
+    <label asp-for="TrangThai" class="form-label"></label>
+    <select asp-for="TrangThai" asp-items="(SelectList)ViewBag.TrangThaiList" class="form-select"></select>
+    <span asp-validation-for="TrangThai" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="MoTa" class="form-label"></label>
+    <textarea asp-for="MoTa" rows="3" class="form-control"></textarea>
+    <span asp-validation-for="MoTa" class="text-danger"></span>
+</div>

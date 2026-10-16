@@ -1,0 +1,14 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.ViTriDoXe
+@{ ViewData["Title"] = "Xóa vị trí đỗ xe"; }
+
+<h3 class="text-danger mb-3">Xác nhận xóa vị trí đỗ xe</h3>
+<dl class="row col-md-8">
+    <dt class="col-sm-4">Tên vị trí</dt><dd class="col-sm-8">@Model.TenViTri</dd>
+    <dt class="col-sm-4">Loại phương tiện</dt><dd class="col-sm-8">@Model.LoaiPhuongTien?.TenLoaiPhuongTien</dd>
+    <dt class="col-sm-4">Khu vực / Tầng</dt><dd class="col-sm-8">@Model.KhuVuc / @Model.Tang</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.MaViTri" method="post">
+    <button class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
