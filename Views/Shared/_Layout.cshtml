@@ -40,6 +40,18 @@
                                 <a class="nav-link text-dark" asp-controller="LoaiPhuongTien" asp-action="Index">Loại phương tiện</a>
                             </li>
                         }
+                        @if (vaiTro == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="ChuPhuongTien" asp-action="Index">Chủ phương tiện</a>
+                            </li>
+                        }
+                        @if (vaiTro == "KhachHang")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="ChuPhuongTien" asp-action="HoSo">Thông tin cá nhân</a>
+                            </li>
+                        }
                     </ul>
 
                     <ul class="navbar-nav">

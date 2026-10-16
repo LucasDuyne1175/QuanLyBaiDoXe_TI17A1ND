@@ -1,0 +1,52 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.HoSoViewModel
+@{ ViewData["Title"] = "Thông tin cá nhân"; }
+
+<h3 class="mb-3">Thông tin cá nhân</h3>
+
+@if (TempData["Msg"] != null) { <div class="alert alert-success">@TempData["Msg"]</div> }
+
+<form asp-action="HoSo" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="HoTen" class="form-label"></label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="NgaySinh" class="form-label"></label>
+            <input asp-for="NgaySinh" type="date" class="form-control" />
+            <span asp-validation-for="NgaySinh" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="GioiTinh" class="form-label"></label>
+            <select asp-for="GioiTinh" class="form-select">
+                <option value="">-- Chọn --</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+            </select>
+            <span asp-validation-for="GioiTinh" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SoDienThoai" class="form-label"></label>
+        <input asp-for="SoDienThoai" class="form-control" />
+        <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DiaChi" class="form-label"></label>
+        <textarea asp-for="DiaChi" rows="2" class="form-control"></textarea>
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+
+    <button class="btn btn-primary">Cập nhật</button>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

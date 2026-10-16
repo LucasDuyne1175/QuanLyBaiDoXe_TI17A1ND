@@ -1,0 +1,59 @@
+﻿@model List<QuanLyBaiDoXe_TI17A1ND.Models.ChuPhuongTien>
+@{ ViewData["Title"] = "Chủ phương tiện"; }
+
+<h3 class="mb-3">Quản lý chủ phương tiện</h3>
+
+@if (TempData["Msg"] != null) { <div class="alert alert-success">@TempData["Msg"]</div> }
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Tìm theo họ tên, số điện thoại, email..." />
+    </div>
+    <div class="col-md-3">
+        <select name="hoatDong" class="form-select">
+            <option value="">-- Tất cả trạng thái --</option>
+            <option value="true" selected="@(ViewBag.HoatDong == true)">Hoạt động</option>
+            <option value="false" selected="@(ViewBag.HoatDong == false)">Ngừng hoạt động</option>
+        </select>
+    </div>
+    <div class="col-md-4 d-flex gap-2">
+        <button class="btn btn-primary">Tìm / Lọc</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Xóa lọc</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Họ tên</th><th>Giới tính</th><th>Ngày sinh</th><th>Số điện thoại</th>
+            <th>Email</th><th>Ngày đăng ký</th><th>Trạng thái</th><th style="width:210px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td colspan="8" class="text-center text-muted">Không có dữ liệu.</td></tr>
+    }
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.HoTen</td>
+            <td>@c.GioiTinh</td>
+            <td>@c.NgaySinh?.ToString("dd/MM/yyyy")</td>
+            <td>@c.SoDienThoai</td>
+            <td>@c.Email</td>
+            <td>@c.NgayDangKy.ToString("dd/MM/yyyy")</td>
+            <td>
+                @if (c.TrangThai) { <span class="badge bg-success">Hoạt động</span> }
+                else { <span class="badge bg-secondary">Ngừng</span> }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@c.MaChuPhuongTien" class="btn btn-sm btn-info">Chi tiết</a>
+                <form asp-action="DoiTrangThai" asp-route-id="@c.MaChuPhuongTien" method="post" class="d-inline">
+                    <button class="btn btn-sm btn-outline-dark">@(c.TrangThai ? "Ngừng" : "Kích hoạt")</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

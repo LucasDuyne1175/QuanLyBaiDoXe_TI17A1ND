@@ -73,13 +73,22 @@ public class TaiKhoanController : Controller
             ModelState.AddModelError(nameof(vm.TenDangNhap), "Tên đăng nhập đã tồn tại.");
         if (!ModelState.IsValid) return View(vm);
 
-        _db.TaiKhoans.Add(new TaiKhoan
+        var tk = new TaiKhoan
         {
             TenDangNhap = vm.TenDangNhap,
             MatKhau = PasswordHelper.Hash(vm.MatKhau),
             HoTen = vm.HoTen,
             Email = vm.Email,
             VaiTro = "KhachHang",
+            TrangThai = true
+        };
+        _db.TaiKhoans.Add(tk);
+        _db.ChuPhuongTiens.Add(new ChuPhuongTien
+        {
+            TaiKhoan = tk,
+            HoTen = vm.HoTen,
+            Email = vm.Email,
+            NgayDangKy = DateTime.Now,
             TrangThai = true
         });
         await _db.SaveChangesAsync();
