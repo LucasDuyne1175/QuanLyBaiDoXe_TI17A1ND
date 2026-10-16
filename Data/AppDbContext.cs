@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
 
     public DbSet<TaiKhoan> TaiKhoans => Set<TaiKhoan>();
     public DbSet<LoaiPhuongTien> LoaiPhuongTiens => Set<LoaiPhuongTien>();
+    public DbSet<ViTriDoXe> ViTriDoXes => Set<ViTriDoXe>();
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
@@ -56,5 +57,38 @@ public class AppDbContext : DbContext
             new LoaiPhuongTien { MaLoaiPhuongTien = 1, TenLoaiPhuongTien = "Xe máy", DonGiaTheoGio = 3000, MoTa = "Xe máy, xe tay ga", TrangThai = true },
             new LoaiPhuongTien { MaLoaiPhuongTien = 2, TenLoaiPhuongTien = "Ô tô", DonGiaTheoGio = 20000, MoTa = "Ô tô dưới 9 chỗ", TrangThai = true },
             new LoaiPhuongTien { MaLoaiPhuongTien = 3, TenLoaiPhuongTien = "Xe đạp điện", DonGiaTheoGio = 2000, MoTa = "Xe đạp, xe đạp điện", TrangThai = true });
+
+        mb.Entity<ViTriDoXe>().HasIndex(v => v.TenViTri).IsUnique();
+        mb.Entity<ViTriDoXe>()
+            .HasOne(v => v.LoaiPhuongTien)
+            .WithMany()
+            .HasForeignKey(v => v.MaLoaiPhuongTien)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // 20 vị trí mẫu: A (xe máy, tầng 1), B (xe máy, tầng 2), C (ô tô, tầng 1), D (xe đạp điện, tầng 1)
+        var viTris = new List<ViTriDoXe>();
+        int id = 1;
+        void ThemViTri(string khu, int soLuong, int tang, int maLoai, string moTa)
+        {
+            for (int i = 1; i <= soLuong; i++)
+            {
+                var ten = $"{khu}{i:00}";
+                viTris.Add(new ViTriDoXe
+                {
+                    MaViTri = id++,
+                    TenViTri = ten,
+                    KhuVuc = $"Khu {khu}",
+                    Tang = tang,
+                    MaLoaiPhuongTien = maLoai,
+                    MoTa = moTa,
+                    TrangThai = (ten == "A05" || ten == "C06") ? TrangThaiViTri.TamNgung : TrangThaiViTri.ConTrong
+                });
+            }
+        }
+        ThemViTri("A", 8, 1, 1, "Vị trí đỗ xe máy tầng 1");
+        ThemViTri("B", 4, 2, 1, "Vị trí đỗ xe máy tầng 2");
+        ThemViTri("C", 6, 1, 2, "Vị trí đỗ ô tô");
+        ThemViTri("D", 2, 1, 3, "Vị trí đỗ xe đạp điện");
+        mb.Entity<ViTriDoXe>().HasData(viTris);
     }
 }

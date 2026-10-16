@@ -152,6 +152,261 @@ namespace QuanLyBaiDoXe_TI17A1ND.Migrations
                             VaiTro = "KhachHang"
                         });
                 });
+
+            modelBuilder.Entity("QuanLyBaiDoXe_TI17A1ND.Models.ViTriDoXe", b =>
+                {
+                    b.Property<int>("MaViTri")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaViTri"));
+
+                    b.Property<string>("KhuVuc")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("MaLoaiPhuongTien")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MoTa")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Tang")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenViTri")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MaViTri");
+
+                    b.HasIndex("MaLoaiPhuongTien");
+
+                    b.HasIndex("TenViTri")
+                        .IsUnique();
+
+                    b.ToTable("ViTriDoXes");
+
+                    b.HasData(
+                        new
+                        {
+                            MaViTri = 1,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A01",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 2,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A02",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 3,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A03",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 4,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A04",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 5,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A05",
+                            TrangThai = "Tạm ngừng"
+                        },
+                        new
+                        {
+                            MaViTri = 6,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A06",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 7,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A07",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 8,
+                            KhuVuc = "Khu A",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 1",
+                            Tang = 1,
+                            TenViTri = "A08",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 9,
+                            KhuVuc = "Khu B",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 2",
+                            Tang = 2,
+                            TenViTri = "B01",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 10,
+                            KhuVuc = "Khu B",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 2",
+                            Tang = 2,
+                            TenViTri = "B02",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 11,
+                            KhuVuc = "Khu B",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 2",
+                            Tang = 2,
+                            TenViTri = "B03",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 12,
+                            KhuVuc = "Khu B",
+                            MaLoaiPhuongTien = 1,
+                            MoTa = "Vị trí đỗ xe máy tầng 2",
+                            Tang = 2,
+                            TenViTri = "B04",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 13,
+                            KhuVuc = "Khu C",
+                            MaLoaiPhuongTien = 2,
+                            MoTa = "Vị trí đỗ ô tô",
+                            Tang = 1,
+                            TenViTri = "C01",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 14,
+                            KhuVuc = "Khu C",
+                            MaLoaiPhuongTien = 2,
+                            MoTa = "Vị trí đỗ ô tô",
+                            Tang = 1,
+                            TenViTri = "C02",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 15,
+                            KhuVuc = "Khu C",
+                            MaLoaiPhuongTien = 2,
+                            MoTa = "Vị trí đỗ ô tô",
+                            Tang = 1,
+                            TenViTri = "C03",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 16,
+                            KhuVuc = "Khu C",
+                            MaLoaiPhuongTien = 2,
+                            MoTa = "Vị trí đỗ ô tô",
+                            Tang = 1,
+                            TenViTri = "C04",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 17,
+                            KhuVuc = "Khu C",
+                            MaLoaiPhuongTien = 2,
+                            MoTa = "Vị trí đỗ ô tô",
+                            Tang = 1,
+                            TenViTri = "C05",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 18,
+                            KhuVuc = "Khu C",
+                            MaLoaiPhuongTien = 2,
+                            MoTa = "Vị trí đỗ ô tô",
+                            Tang = 1,
+                            TenViTri = "C06",
+                            TrangThai = "Tạm ngừng"
+                        },
+                        new
+                        {
+                            MaViTri = 19,
+                            KhuVuc = "Khu D",
+                            MaLoaiPhuongTien = 3,
+                            MoTa = "Vị trí đỗ xe đạp điện",
+                            Tang = 1,
+                            TenViTri = "D01",
+                            TrangThai = "Còn trống"
+                        },
+                        new
+                        {
+                            MaViTri = 20,
+                            KhuVuc = "Khu D",
+                            MaLoaiPhuongTien = 3,
+                            MoTa = "Vị trí đỗ xe đạp điện",
+                            Tang = 1,
+                            TenViTri = "D02",
+                            TrangThai = "Còn trống"
+                        });
+                });
+
+            modelBuilder.Entity("QuanLyBaiDoXe_TI17A1ND.Models.ViTriDoXe", b =>
+                {
+                    b.HasOne("QuanLyBaiDoXe_TI17A1ND.Models.LoaiPhuongTien", "LoaiPhuongTien")
+                        .WithMany()
+                        .HasForeignKey("MaLoaiPhuongTien")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("LoaiPhuongTien");
+                });
 #pragma warning restore 612, 618
         }
     }
