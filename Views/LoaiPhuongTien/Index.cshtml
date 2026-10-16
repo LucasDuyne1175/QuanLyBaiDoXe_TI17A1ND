@@ -1,0 +1,62 @@
+﻿@model List<QuanLyBaiDoXe_TI17A1ND.Models.LoaiPhuongTien>
+@{ ViewData["Title"] = "Loại phương tiện"; }
+
+<h3 class="mb-3">Quản lý loại phương tiện</h3>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+@if (TempData["Err"] != null)
+{
+    <div class="alert alert-danger">@TempData["Err"]</div>
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <form method="get" class="d-flex gap-2">
+        <input name="keyword" value="@ViewBag.Keyword" class="form-control" placeholder="Tìm theo tên loại..." />
+        <button class="btn btn-outline-primary">Tìm</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Xóa lọc</a>
+    </form>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm loại phương tiện</a>
+</div>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Mã</th>
+            <th>Tên loại</th>
+            <th class="text-end">Đơn giá theo giờ</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+            <th style="width:260px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td colspan="6" class="text-center text-muted">Không có dữ liệu.</td></tr>
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.MaLoaiPhuongTien</td>
+            <td>@item.TenLoaiPhuongTien</td>
+            <td class="text-end">@item.DonGiaTheoGio.ToString("N0") đ</td>
+            <td>@item.MoTa</td>
+            <td>
+                @if (item.TrangThai) { <span class="badge bg-success">Hoạt động</span> }
+                else { <span class="badge bg-secondary">Ngừng</span> }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.MaLoaiPhuongTien" class="btn btn-sm btn-info">Chi tiết</a>
+                <a asp-action="Edit" asp-route-id="@item.MaLoaiPhuongTien" class="btn btn-sm btn-warning">Sửa</a>
+                <a asp-action="Delete" asp-route-id="@item.MaLoaiPhuongTien" class="btn btn-sm btn-danger">Xóa</a>
+                <form asp-action="DoiTrangThai" asp-route-id="@item.MaLoaiPhuongTien" method="post" class="d-inline">
+                    <button class="btn btn-sm btn-outline-dark">@(item.TrangThai ? "Ngừng" : "Kích hoạt")</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

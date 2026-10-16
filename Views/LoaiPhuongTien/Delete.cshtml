@@ -1,0 +1,19 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.LoaiPhuongTien
+@{ ViewData["Title"] = "Xóa loại phương tiện"; }
+
+<h3 class="text-danger mb-3">Xác nhận xóa loại phương tiện</h3>
+<p>Bạn có chắc muốn xóa loại phương tiện sau?</p>
+
+<dl class="row col-md-8">
+    <dt class="col-sm-4">Tên loại</dt>
+    <dd class="col-sm-8">@Model.TenLoaiPhuongTien</dd>
+    <dt class="col-sm-4">Đơn giá theo giờ</dt>
+    <dd class="col-sm-8">@Model.DonGiaTheoGio.ToString("N0") đ</dd>
+    <dt class="col-sm-4">Mô tả</dt>
+    <dd class="col-sm-8">@Model.MoTa</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.MaLoaiPhuongTien" method="post">
+    <button class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

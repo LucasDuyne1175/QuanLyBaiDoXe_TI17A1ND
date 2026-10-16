@@ -1,0 +1,33 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.LoaiPhuongTien
+@{ ViewData["Title"] = "Thêm loại phương tiện"; }
+
+<h3 class="mb-3">Thêm loại phương tiện</h3>
+
+<form asp-action="Create" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="TenLoaiPhuongTien" class="form-label"></label>
+        <input asp-for="TenLoaiPhuongTien" class="form-control" />
+        <span asp-validation-for="TenLoaiPhuongTien" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DonGiaTheoGio" class="form-label"></label>
+        <input asp-for="DonGiaTheoGio" type="number" step="500" min="0" class="form-control" />
+        <span asp-validation-for="DonGiaTheoGio" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MoTa" class="form-label"></label>
+        <textarea asp-for="MoTa" rows="3" class="form-control"></textarea>
+        <span asp-validation-for="MoTa" class="text-danger"></span>
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="TrangThai" class="form-check-input" />
+        <label asp-for="TrangThai" class="form-check-label"></label>
+    </div>
+
+    <button class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
