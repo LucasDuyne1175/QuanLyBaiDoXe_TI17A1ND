@@ -95,11 +95,11 @@ public class LoaiPhuongTienController : Controller
         var item = await _db.LoaiPhuongTiens.FindAsync(id);
         if (item == null) return NotFound();
 
-        // Phần kiểm tra PhuongTien sẽ bổ sung ở Module 3
-        bool dangDung = await _db.ViTriDoXes.AnyAsync(v => v.MaLoaiPhuongTien == id);
+        bool dangDung = await _db.ViTriDoXes.AnyAsync(v => v.MaLoaiPhuongTien == id)
+             || await _db.PhuongTiens.AnyAsync(p => p.MaLoaiPhuongTien == id);
         if (dangDung)
         {
-            TempData["Err"] = "Không thể xóa: loại này đang được vị trí đỗ xe sử dụng.";
+            TempData["Err"] = "Không thể xóa: loại này đang được phương tiện hoặc vị trí đỗ xe sử dụng.";
             return RedirectToAction(nameof(Index));
         }
 

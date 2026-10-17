@@ -1,0 +1,56 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.PhuongTien
+@{ bool laAdmin = ViewBag.LaAdmin == true; }
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+@if (Model.MaPhuongTien == 0 && laAdmin)
+{
+    <div class="mb-3">
+        <label asp-for="MaChuPhuongTien" class="form-label">Chủ phương tiện</label>
+        <select asp-for="MaChuPhuongTien" asp-items="(SelectList)ViewBag.ChuList" class="form-select">
+            <option value="0">-- Chọn chủ phương tiện --</option>
+        </select>
+        <span asp-validation-for="MaChuPhuongTien" class="text-danger"></span>
+    </div>
+}
+else if (Model.MaPhuongTien != 0)
+{
+    <div class="mb-3">
+        <label class="form-label">Chủ phương tiện</label>
+        <input class="form-control" value="@ViewBag.TenChu" disabled />
+    </div>
+}
+
+<div class="mb-3">
+    <label asp-for="BienSoXe" class="form-label"></label>
+    <input asp-for="BienSoXe" class="form-control" placeholder="VD: 29A1-12345" />
+    <span asp-validation-for="BienSoXe" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="MaLoaiPhuongTien" class="form-label"></label>
+    <select asp-for="MaLoaiPhuongTien" asp-items="(SelectList)ViewBag.LoaiList" class="form-select">
+        <option value="0">-- Chọn loại phương tiện --</option>
+    </select>
+    <span asp-validation-for="MaLoaiPhuongTien" class="text-danger"></span>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="NhanHieu" class="form-label"></label>
+        <input asp-for="NhanHieu" class="form-control" />
+        <span asp-validation-for="NhanHieu" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="MauSac" class="form-label"></label>
+        <input asp-for="MauSac" class="form-control" />
+        <span asp-validation-for="MauSac" class="text-danger"></span>
+    </div>
+</div>
+<div class="mb-3">
+    <label asp-for="MoTa" class="form-label"></label>
+    <textarea asp-for="MoTa" rows="3" class="form-control"></textarea>
+    <span asp-validation-for="MoTa" class="text-danger"></span>
+</div>
+<div class="form-check mb-3">
+    <input asp-for="TrangThai" class="form-check-input" />
+    <label asp-for="TrangThai" class="form-check-label"></label>
+</div>

@@ -1,0 +1,20 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.PhuongTien
+@{ ViewData["Title"] = "Chi tiết phương tiện"; }
+
+<h3 class="mb-3">Chi tiết phương tiện @Model.BienSoXe</h3>
+<dl class="row col-md-8">
+    <dt class="col-sm-4">Biển số</dt><dd class="col-sm-8">@Model.BienSoXe</dd>
+    <dt class="col-sm-4">Loại phương tiện</dt><dd class="col-sm-8">@Model.LoaiPhuongTien?.TenLoaiPhuongTien</dd>
+    <dt class="col-sm-4">Nhãn hiệu</dt><dd class="col-sm-8">@Model.NhanHieu</dd>
+    <dt class="col-sm-4">Màu sắc</dt><dd class="col-sm-8">@Model.MauSac</dd>
+    <dt class="col-sm-4">Chủ xe</dt><dd class="col-sm-8">@Model.ChuPhuongTien?.HoTen</dd>
+    <dt class="col-sm-4">Mô tả</dt><dd class="col-sm-8">@(string.IsNullOrWhiteSpace(Model.MoTa) ? "(không có)" : Model.MoTa)</dd>
+    <dt class="col-sm-4">Trạng thái</dt>
+    <dd class="col-sm-8">
+        @if (Model.TrangThai) { <span class="badge bg-success">Hoạt động</span> }
+        else { <span class="badge bg-secondary">Ngừng</span> }
+    </dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.MaPhuongTien" class="btn btn-warning">Sửa</a>
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

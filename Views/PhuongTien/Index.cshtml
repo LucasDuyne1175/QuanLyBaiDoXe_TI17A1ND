@@ -1,0 +1,73 @@
+﻿@model List<QuanLyBaiDoXe_TI17A1ND.Models.PhuongTien>
+@{
+    bool laAdmin = ViewBag.LaAdmin == true;
+    ViewData["Title"] = laAdmin ? "Phương tiện" : "Xe của tôi";
+}
+
+<h3 class="mb-3">@(laAdmin ? "Quản lý phương tiện" : "Phương tiện của tôi")</h3>
+
+@if (TempData["Msg"] != null) { <div class="alert alert-success">@TempData["Msg"]</div> }
+@if (TempData["Err"] != null) { <div class="alert alert-danger">@TempData["Err"]</div> }
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input name="keyword" value="@ViewBag.Keyword" class="form-control"
+               placeholder="@(laAdmin ? "Biển số, nhãn hiệu, tên chủ xe..." : "Biển số, nhãn hiệu...")" />
+    </div>
+    <div class="col-md-3">
+        <select name="maLoai" asp-items="(SelectList)ViewBag.LoaiList" class="form-select">
+            <option value="">-- Loại phương tiện --</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="hoatDong" class="form-select">
+            <option value="">-- Trạng thái --</option>
+            <option value="true" selected="@(ViewBag.HoatDong == true)">Hoạt động</option>
+            <option value="false" selected="@(ViewBag.HoatDong == false)">Ngừng</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-primary">Tìm / Lọc</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Xóa lọc</a>
+        <a asp-action="Create" class="btn btn-success ms-auto">+ Thêm</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Biển số</th>
+            <th>Loại</th>
+            <th>Nhãn hiệu</th>
+            <th>Màu</th>
+            @if (laAdmin) { <th>Chủ xe</th> }
+            <th>Trạng thái</th>
+            <th style="width:200px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td colspan="7" class="text-center text-muted">Không có phương tiện nào.</td></tr>
+    }
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td><b>@p.BienSoXe</b></td>
+            <td>@p.LoaiPhuongTien?.TenLoaiPhuongTien</td>
+            <td>@p.NhanHieu</td>
+            <td>@p.MauSac</td>
+            @if (laAdmin) { <td>@p.ChuPhuongTien?.HoTen</td> }
+            <td>
+                @if (p.TrangThai) { <span class="badge bg-success">Hoạt động</span> }
+                else { <span class="badge bg-secondary">Ngừng</span> }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@p.MaPhuongTien" class="btn btn-sm btn-info">Chi tiết</a>
+                <a asp-action="Edit" asp-route-id="@p.MaPhuongTien" class="btn btn-sm btn-warning">Sửa</a>
+                <a asp-action="Delete" asp-route-id="@p.MaPhuongTien" class="btn btn-sm btn-danger">Xóa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
