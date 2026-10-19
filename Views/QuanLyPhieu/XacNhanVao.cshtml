@@ -1,0 +1,24 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.PhieuGuiXe
+@{ ViewData["Title"] = "Xác nhận xe vào"; }
+
+<h3 class="mb-3">Xác nhận xe vào - phiếu #@Model.MaPhieu</h3>
+
+@if (TempData["Err"] != null) { <div class="alert alert-danger">@TempData["Err"]</div> }
+
+<dl class="row col-md-8">
+    <dt class="col-sm-4">Chủ xe</dt><dd class="col-sm-8">@Model.PhuongTien?.ChuPhuongTien?.HoTen</dd>
+    <dt class="col-sm-4">Loại phương tiện</dt><dd class="col-sm-8">@Model.PhuongTien?.LoaiPhuongTien?.TenLoaiPhuongTien</dd>
+    <dt class="col-sm-4">Vị trí đỗ</dt><dd class="col-sm-8">@Model.ViTriDoXe?.TenViTri (@Model.ViTriDoXe?.TrangThai)</dd>
+    <dt class="col-sm-4">Dự kiến</dt>
+    <dd class="col-sm-8">@Model.ThoiGianDuKienVao.ToString("dd/MM/yyyy HH:mm") → @Model.ThoiGianDuKienRa.ToString("dd/MM/yyyy HH:mm")</dd>
+</dl>
+
+<form asp-action="XacNhanVao" asp-route-id="@Model.MaPhieu" method="post" class="col-md-5">
+    <div class="mb-3">
+        <label class="form-label">Nhập biển số xe thực tế tại cổng</label>
+        <input name="bienSoThucTe" class="form-control" placeholder="Đối chiếu với biển số trên phiếu" required />
+        <div class="form-text">Hệ thống so khớp với biển số đã đăng ký trên phiếu.</div>
+    </div>
+    <button class="btn btn-success">Xác nhận xe vào</button>
+    <a asp-action="Details" asp-route-id="@Model.MaPhieu" class="btn btn-secondary">Quay lại</a>
+</form>

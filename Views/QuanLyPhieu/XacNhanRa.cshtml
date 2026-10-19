@@ -1,0 +1,22 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.PhieuGuiXe
+@{ ViewData["Title"] = "Xác nhận xe ra"; }
+
+<h3 class="mb-3">Xác nhận xe ra - phiếu #@Model.MaPhieu</h3>
+
+@if (TempData["Err"] != null) { <div class="alert alert-danger">@TempData["Err"]</div> }
+
+<dl class="row col-md-8">
+    <dt class="col-sm-4">Biển số</dt><dd class="col-sm-8">@Model.PhuongTien?.BienSoXe</dd>
+    <dt class="col-sm-4">Vị trí đỗ</dt><dd class="col-sm-8">@Model.ViTriDoXe?.TenViTri</dd>
+    <dt class="col-sm-4">Vào thực tế</dt><dd class="col-sm-8">@Model.ThoiGianVaoThucTe?.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-4">Ra (bây giờ)</dt><dd class="col-sm-8">@(((DateTime)ViewBag.BayGio).ToString("dd/MM/yyyy HH:mm"))</dd>
+    <dt class="col-sm-4">Đơn giá theo giờ</dt><dd class="col-sm-8">@Model.DonGiaTheoGio.ToString("N0") đ</dd>
+    <dt class="col-sm-4">Số giờ tính phí</dt><dd class="col-sm-8">@ViewBag.SoGio giờ <span class="text-muted">(làm tròn lên, tối thiểu 1 giờ)</span></dd>
+    <dt class="col-sm-4">Thành tiền tạm tính</dt>
+    <dd class="col-sm-8"><b class="text-danger fs-5">@(((decimal)ViewBag.TamTinh).ToString("N0")) đ</b></dd>
+</dl>
+
+<form asp-action="XacNhanRa" asp-route-id="@Model.MaPhieu" method="post">
+    <button class="btn btn-warning">Xác nhận xe ra và tính phí</button>
+    <a asp-action="Details" asp-route-id="@Model.MaPhieu" class="btn btn-secondary">Quay lại</a>
+</form>

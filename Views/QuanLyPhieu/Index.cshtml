@@ -1,0 +1,109 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.QuanLyPhieuListViewModel
+@using QuanLyBaiDoXe_TI17A1ND.ViewModels
+@{
+    ViewData["Title"] = "Quản lý phiếu gửi xe";
+
+    Dictionary<string, string> Route(int p)
+    {
+        var d = new Dictionary<string, string>();
+        if (!string.IsNullOrWhiteSpace(Model.BienSo)) d["bienSo"] = Model.BienSo;
+        if (!string.IsNullOrWhiteSpace(Model.TenChu)) d["tenChu"] = Model.TenChu;
+        if (Model.MaLoai.HasValue) d["maLoai"] = Model.MaLoai.Value.ToString();
+        if (!string.IsNullOrEmpty(Model.TrangThai)) d["trangThai"] = Model.TrangThai;
+        if (Model.TuNgay.HasValue) d["tuNgay"] = Model.TuNgay.Value.ToString("yyyy-MM-dd");
+        if (Model.DenNgay.HasValue) d["denNgay"] = Model.DenNgay.Value.ToString("yyyy-MM-dd");
+        d["page"] = p.ToString();
+        return d;
+    }
+}
+
+<h3 class="mb-3">Quản lý phiếu gửi xe</h3>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+@if (TempData["Err"] != null)
+{
+    <div class="alert alert-danger">@TempData["Err"]</div>
+}
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-2"><input name="bienSo" value="@Model.BienSo" class="form-control" placeholder="Biển số xe" /></div>
+    <div class="col-md-2"><input name="tenChu" value="@Model.TenChu" class="form-control" placeholder="Tên chủ xe" /></div>
+    <div class="col-md-2">
+        <select name="maLoai" asp-items="Model.LoaiList" class="form-select"><option value="">-- Loại xe --</option></select>
+    </div>
+    <div class="col-md-2">
+        <select name="trangThai" asp-items="Model.TrangThaiList" class="form-select"><option value="">-- Trạng thái --</option></select>
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="tuNgay" value="@Model.TuNgay?.ToString("yyyy-MM-dd")" class="form-control" title="Đăng ký từ ngày" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="denNgay" value="@Model.DenNgay?.ToString("yyyy-MM-dd")" class="form-control" title="Đăng ký đến ngày" />
+    </div>
+    <div class="col-12 d-flex gap-2">
+        <button class="btn btn-primary">Tìm / Lọc</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Xóa bộ lọc</a>
+    </div>
+</form>
+
+<p class="text-muted">Tìm thấy <b>@Model.TotalItems</b> phiếu. Trang <b>@Model.Page</b> / @Model.TotalPages.</p>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Mã</th>
+            <th>Biển số</th>
+            <th>Chủ xe</th>
+            <th>Loại</th>
+            <th>Vị trí</th>
+            <th>Ngày đăng ký</th>
+            <th>Dự kiến vào/ra</th>
+            <th class="text-end">Thành tiền</th>
+            <th>Trạng thái</th>
+            <th style="width:200px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Items.Any())
+        {
+            <tr><td colspan="10" class="text-center text-muted">Không có phiếu nào phù hợp.</td></tr>
+        }
+        @foreach (var p in Model.Items)
+        {
+            var badge = p.TrangThai switch
+            {
+                "Chờ xác nhận" => "bg-warning text-dark",
+                "Đang gửi" => "bg-primary",
+                "Đã lấy xe" => "bg-success",
+                _ => "bg-secondary"
+            };
+            <tr>
+                <td>#@p.MaPhieu</td>
+                <td><b>@p.PhuongTien?.BienSoXe</b></td>
+                <td>@p.PhuongTien?.ChuPhuongTien?.HoTen</td>
+                <td>@p.PhuongTien?.LoaiPhuongTien?.TenLoaiPhuongTien</td>
+                <td>@p.ViTriDoXe?.TenViTri</td>
+                <td>@p.NgayDangKy.ToString("dd/MM/yyyy")</td>
+                <td>@p.ThoiGianDuKienVao.ToString("dd/MM HH:mm") → @p.ThoiGianDuKienRa.ToString("dd/MM HH:mm")</td>
+                <td class="text-end">@(p.ThanhTien.HasValue ? p.ThanhTien.Value.ToString("N0") + " đ" : "-")</td>
+                <td><span class="badge @badge">@p.TrangThai</span></td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@p.MaPhieu" class="btn btn-sm btn-info">Chi tiết</a>
+                    @if (p.TrangThai == "Chờ xác nhận")
+                    {
+                        <a asp-action="XacNhanVao" asp-route-id="@p.MaPhieu" class="btn btn-sm btn-success">Xe vào</a>
+                    }
+                    else if (p.TrangThai == "Đang gửi")
+                    {
+                        <a asp-action="XacNhanRa" asp-route-id="@p.MaPhieu" class="btn btn-sm btn-warning">Xe ra</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Pager" model="@(new PagerViewModel { Page = Model.Page, TotalPages = Model.TotalPages, Route = Route })" />

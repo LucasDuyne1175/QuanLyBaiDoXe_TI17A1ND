@@ -52,10 +52,25 @@
                                 <a class="nav-link text-dark" asp-controller="ChuPhuongTien" asp-action="Index">Chủ phương tiện</a>
                             </li>
                         }
+                        @if (vaiTro == "Admin")
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="QuanLyPhieu" asp-action="Index">Phiếu gửi xe</a>
+                            </li>
+                        }
                         @if (vaiTro == "KhachHang")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="ChuPhuongTien" asp-action="HoSo">Thông tin cá nhân</a>
+                            </li>
+                        }
+                        @if (vaiTro == "KhachHang")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="PhieuGuiXe" asp-action="DangKy">Đăng ký gửi xe</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="PhieuGuiXe" asp-action="LichSu">Lịch sử gửi xe</a>
                             </li>
                         }
                     </ul>

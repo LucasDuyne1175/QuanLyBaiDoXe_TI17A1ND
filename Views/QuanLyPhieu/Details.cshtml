@@ -1,0 +1,54 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.PhieuGuiXe
+@{
+    ViewData["Title"] = "Chi tiết phiếu gửi xe";
+}
+
+<h3 class="mb-3">Phiếu gửi xe #@Model.MaPhieu</h3>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+@if (TempData["Err"] != null)
+{
+    <div class="alert alert-danger">@TempData["Err"]</div>
+}
+
+<dl class="row col-md-9">
+    <dt class="col-sm-4">Chủ phương tiện</dt>
+    <dd class="col-sm-8">@Model.PhuongTien?.ChuPhuongTien?.HoTen (@Model.PhuongTien?.ChuPhuongTien?.SoDienThoai)</dd>
+    <dt class="col-sm-4">Phương tiện</dt>
+    <dd class="col-sm-8">@Model.PhuongTien?.BienSoXe (@Model.PhuongTien?.LoaiPhuongTien?.TenLoaiPhuongTien)</dd>
+    <dt class="col-sm-4">Vị trí đỗ</dt>
+    <dd class="col-sm-8">@Model.ViTriDoXe?.TenViTri - @Model.ViTriDoXe?.KhuVuc, tầng @Model.ViTriDoXe?.Tang (@Model.ViTriDoXe?.TrangThai)</dd>
+    <dt class="col-sm-4">Ngày đăng ký</dt>
+    <dd class="col-sm-8">@Model.NgayDangKy.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-4">Dự kiến vào</dt>
+    <dd class="col-sm-8">@Model.ThoiGianDuKienVao.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-4">Dự kiến ra</dt>
+    <dd class="col-sm-8">@Model.ThoiGianDuKienRa.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-4">Vào thực tế</dt>
+    <dd class="col-sm-8">@(Model.ThoiGianVaoThucTe?.ToString("dd/MM/yyyy HH:mm") ?? "-")</dd>
+    <dt class="col-sm-4">Ra thực tế</dt>
+    <dd class="col-sm-8">@(Model.ThoiGianRaThucTe?.ToString("dd/MM/yyyy HH:mm") ?? "-")</dd>
+    <dt class="col-sm-4">Đơn giá theo giờ</dt>
+    <dd class="col-sm-8">@Model.DonGiaTheoGio.ToString("N0") đ</dd>
+    <dt class="col-sm-4">Thành tiền</dt>
+    <dd class="col-sm-8">@(Model.ThanhTien.HasValue ? Model.ThanhTien.Value.ToString("N0") + " đ" : "Chưa tính")</dd>
+    <dt class="col-sm-4">Trạng thái</dt>
+    <dd class="col-sm-8"><b>@Model.TrangThai</b></dd>
+</dl>
+
+@if (Model.TrangThai == "Chờ xác nhận")
+{
+    <a asp-action="XacNhanVao" asp-route-id="@Model.MaPhieu" class="btn btn-success">Xác nhận xe vào</a>
+    <form asp-action="Huy" asp-route-id="@Model.MaPhieu" method="post" class="d-inline"
+          onsubmit="return confirm('Hủy phiếu #@Model.MaPhieu?');">
+        <button class="btn btn-danger">Hủy phiếu</button>
+    </form>
+}
+else if (Model.TrangThai == "Đang gửi")
+{
+    <a asp-action="XacNhanRa" asp-route-id="@Model.MaPhieu" class="btn btn-warning">Xác nhận xe ra</a>
+}
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

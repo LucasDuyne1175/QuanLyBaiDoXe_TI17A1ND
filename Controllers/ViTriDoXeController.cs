@@ -158,12 +158,11 @@ public class ViTriDoXeController : Controller
         var item = await _db.ViTriDoXes.FindAsync(id);
         if (item == null) return NotFound();
 
-        // Mở comment khi đã có entity PhieuGuiXe (Module 4):
-        // if (await _db.PhieuGuiXes.AnyAsync(p => p.MaViTri == id))
-        // {
-        //     TempData["Err"] = "Không thể xóa: vị trí đã có phiếu gửi xe.";
-        //     return RedirectToAction(nameof(Index));
-        // }
+        if (await _db.PhieuGuiXes.AnyAsync(p => p.MaViTri == id))
+        {
+            TempData["Err"] = "Không thể xóa: vị trí đã có phiếu gửi xe.";
+            return RedirectToAction(nameof(Index));
+        }
 
         _db.ViTriDoXes.Remove(item);
         await _db.SaveChangesAsync();
