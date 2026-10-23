@@ -1,0 +1,71 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+
+    var the = new[]
+    {
+        (Nhan: "Loại phương tiện", Gia: Model.TongLoaiPhuongTien, Icon: "bi-tags", Tone: "tone-indigo", Ctrl: "LoaiPhuongTien", TT: (string?)null),
+        (Nhan: "Vị trí đỗ xe", Gia: Model.TongViTri, Icon: "bi-grid-3x3-gap", Tone: "tone-blue", Ctrl: "ViTriDoXe", TT: (string?)null),
+        (Nhan: "Chủ phương tiện", Gia: Model.TongChuPhuongTien, Icon: "bi-people", Tone: "tone-teal", Ctrl: "ChuPhuongTien", TT: (string?)null),
+        (Nhan: "Phương tiện", Gia: Model.TongPhuongTien, Icon: "bi-car-front", Tone: "tone-purple", Ctrl: "PhuongTien", TT: (string?)null),
+        (Nhan: "Tổng phiếu gửi xe", Gia: Model.TongPhieu, Icon: "bi-receipt", Tone: "tone-slate", Ctrl: "QuanLyPhieu", TT: (string?)null),
+        (Nhan: "Phiếu chờ xác nhận", Gia: Model.PhieuChoXacNhan, Icon: "bi-hourglass-split", Tone: "tone-amber", Ctrl: "QuanLyPhieu", TT: (string?)"Chờ xác nhận"),
+        (Nhan: "Xe đang gửi", Gia: Model.XeDangGui, Icon: "bi-box-arrow-in-right", Tone: "tone-sky", Ctrl: "QuanLyPhieu", TT: (string?)"Đang gửi"),
+        (Nhan: "Vị trí còn trống", Gia: Model.ViTriConTrong, Icon: "bi-check-circle", Tone: "tone-green", Ctrl: "ViTriDoXe", TT: (string?)"Còn trống"),
+        (Nhan: "Vị trí đang sử dụng", Gia: Model.ViTriDangSuDung, Icon: "bi-lock-fill", Tone: "tone-red", Ctrl: "ViTriDoXe", TT: (string?)"Đang sử dụng")
+    };
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="mb-0">Dashboard</h3>
+        <span class="text-muted">Tổng quan hoạt động của bãi xe</span>
+    </div>
+    <a asp-controller="ThongKe" asp-action="Index" class="btn btn-outline-primary"><i class="bi bi-bar-chart-line me-1"></i>Thống kê chi tiết</a>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-8">
+        <div class="row g-3">
+            @foreach (var c in the)
+            {
+                <div class="col-sm-6 col-xl-4">
+                    <a class="stat-card" href="@Url.Action("Index", c.Ctrl, new { trangThai = c.TT })">
+                        <div class="stat-icon @c.Tone"><i class="bi @c.Icon"></i></div>
+                        <div>
+                            <div class="stat-number" data-count="@c.Gia">@c.Gia</div>
+                            <div class="stat-label">@c.Nhan</div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header fw-bold">Tình trạng vị trí đỗ</div>
+            <div class="card-body">
+                <div class="chart-box"><canvas id="chartViTri"></canvas></div>
+                <p class="text-muted small text-center mt-3 mb-0">Tổng @Model.TongViTri vị trí</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>
+        new Chart(document.getElementById('chartViTri'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Còn trống', 'Đang sử dụng', 'Tạm ngừng'],
+                datasets: [{
+                    data: [@Model.ViTriConTrong, @Model.ViTriDangSuDung, @Model.ViTriTamNgung],
+                    backgroundColor: ['#22c55e', '#ef4444', '#94a3b8'],
+                    borderWidth: 3, borderColor: '#fff'
+                }]
+            },
+            options: { maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom' } } }
+        });
+    </script>
+}

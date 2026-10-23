@@ -1,0 +1,121 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.ThongKeViewModel
+@using QuanLyBaiDoXe_TI17A1ND.ViewModels
+@{
+    ViewData["Title"] = "Thống kê";
+}
+
+<h3 class="mb-3">Thống kê</h3>
+
+@if (Model.ViTriNhieuNhat != null)
+{
+    <div class="alert alert-info">
+        Vị trí có số lượt sử dụng nhiều nhất: <b>@Model.ViTriNhieuNhat.Ten</b> (@Model.ViTriNhieuNhat.SoLuong lượt).
+        Tổng doanh thu các phiếu đã lấy xe: <b>@Model.TongDoanhThu.ToString("N0") đ</b>.
+    </div>
+}
+
+<div class="row g-3 mb-3">
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header fw-bold">Doanh thu và lượt gửi theo tháng</div>
+            <div class="card-body"><div class="chart-box"><canvas id="chartDoanhThu"></canvas></div></div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header fw-bold">Phiếu theo trạng thái</div>
+            <div class="card-body"><div class="chart-box"><canvas id="chartPhieu"></canvas></div></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4">
+        <partial name="_BangThongKe" model="@(new BangThongKeViewModel { TieuDe = "Số phương tiện theo loại", CotTen = "Loại phương tiện", Dong = Model.PhuongTienTheoLoai })" />
+    </div>
+    <div class="col-md-4">
+        <partial name="_BangThongKe" model="@(new BangThongKeViewModel { TieuDe = "Số vị trí theo trạng thái", CotTen = "Trạng thái", Dong = Model.ViTriTheoTrangThai })" />
+    </div>
+    <div class="col-md-4">
+        <partial name="_BangThongKe" model="@(new BangThongKeViewModel { TieuDe = "Số phiếu theo trạng thái", CotTen = "Trạng thái", Dong = Model.PhieuTheoTrangThai })" />
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4">
+        <partial name="_BangThongKe" model="@(new BangThongKeViewModel { TieuDe = "Lượt gửi theo loại phương tiện", CotTen = "Loại phương tiện", CotSo = "Lượt", Dong = Model.LuotTheoLoai })" />
+    </div>
+    <div class="col-md-4">
+        <partial name="_BangThongKe" model="@(new BangThongKeViewModel { TieuDe = "Lượt gửi theo vị trí", CotTen = "Vị trí", CotSo = "Lượt", Dong = Model.LuotTheoViTri })" />
+    </div>
+    <div class="col-md-4">
+        <partial name="_BangThongKe" model="@(new BangThongKeViewModel { TieuDe = "Lượt gửi theo chủ phương tiện", CotTen = "Chủ phương tiện", CotSo = "Lượt", Dong = Model.LuotTheoChuXe })" />
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header fw-bold">Lượt gửi và doanh thu theo tháng</div>
+    <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+            <thead class="table-light">
+                <tr><th>Tháng</th><th class="text-end">Số lượt gửi</th><th class="text-end">Doanh thu (phiếu Đã lấy xe)</th></tr>
+            </thead>
+            <tbody>
+                @if (!Model.TheoThang.Any())
+                {
+                    <tr><td colspan="3" class="text-center text-muted">Chưa có dữ liệu.</td></tr>
+                }
+                @foreach (var t in Model.TheoThang)
+                {
+                    <tr>
+                        <td>@t.Thang</td>
+                        <td class="text-end">@t.SoLuot</td>
+                        <td class="text-end">@t.DoanhThu.ToString("N0") đ</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot class="table-light">
+                <tr><th>Tổng</th><th class="text-end">@Model.TheoThang.Sum(t => t.SoLuot)</th><th class="text-end">@Model.TongDoanhThu.ToString("N0") đ</th></tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>
+        const thang = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TheoThang.Select(t => t.Thang)));
+        const doanhThu = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TheoThang.Select(t => t.DoanhThu)));
+        const luot = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TheoThang.Select(t => t.SoLuot)));
+        const phieuTen = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PhieuTheoTrangThai.Select(p => p.Ten)));
+        const phieuSo = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PhieuTheoTrangThai.Select(p => p.SoLuong)));
+
+        new Chart(document.getElementById('chartDoanhThu'), {
+            type: 'bar',
+            data: {
+                labels: thang,
+                datasets: [
+                    { label: 'Doanh thu (đ)', data: doanhThu, backgroundColor: '#6366f1', borderRadius: 8, yAxisID: 'y' },
+                    { label: 'Số lượt gửi', data: luot, type: 'line', borderColor: '#f59e0b', backgroundColor: '#f59e0b', tension: .3, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, ticks: { callback: v => v.toLocaleString('vi-VN') } },
+                    y1: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { precision: 0 } }
+                },
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        const mauTrangThai = { 'Chờ xác nhận': '#f59e0b', 'Đang gửi': '#3b82f6', 'Đã lấy xe': '#22c55e', 'Đã hủy': '#94a3b8' };
+        new Chart(document.getElementById('chartPhieu'), {
+            type: 'doughnut',
+            data: {
+                labels: phieuTen,
+                datasets: [{ data: phieuSo, backgroundColor: phieuTen.map(t => mauTrangThai[t] || '#cbd5e1'), borderWidth: 3, borderColor: '#fff' }]
+            },
+            options: { maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom' } } }
+        });
+    </script>
+}

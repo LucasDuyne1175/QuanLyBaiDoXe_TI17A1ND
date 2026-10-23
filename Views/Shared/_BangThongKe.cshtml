@@ -1,0 +1,33 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.BangThongKeViewModel
+@{
+    int max = Model.Dong.Any() ? Math.Max(1, Model.Dong.Max(d => d.SoLuong)) : 1;
+}
+
+<div class="card h-100">
+    <div class="card-header fw-bold">@Model.TieuDe</div>
+    <div class="card-body p-0">
+        <table class="table table-sm mb-0 align-middle">
+            <thead class="table-light">
+                <tr><th>@Model.CotTen</th><th style="width:40%"></th><th class="text-end">@Model.CotSo</th></tr>
+            </thead>
+            <tbody>
+                @if (!Model.Dong.Any())
+                {
+                    <tr><td colspan="3" class="text-center text-muted">Chưa có dữ liệu.</td></tr>
+                }
+                @foreach (var d in Model.Dong)
+                {
+                    <tr>
+                        <td>@d.Ten</td>
+                        <td>
+                            <div class="progress" style="height:8px">
+                                <div class="progress-bar" style="width:@(d.SoLuong * 100 / max)%"></div>
+                            </div>
+                        </td>
+                        <td class="text-end"><b>@d.SoLuong</b></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

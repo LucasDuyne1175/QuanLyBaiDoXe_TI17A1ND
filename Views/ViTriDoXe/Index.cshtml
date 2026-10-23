@@ -105,6 +105,11 @@
                     <a asp-action="Edit" asp-route-id="@v.MaViTri" class="btn btn-sm btn-warning">Sửa</a>
                     <a asp-action="Delete" asp-route-id="@v.MaViTri" class="btn btn-sm btn-danger">Xóa</a>
                 }
+                else if (v.TrangThai != "Tạm ngừng")
+                {
+                    <a asp-controller="PhieuGuiXe" asp-action="DangKy" asp-route-maViTri="@v.MaViTri"
+                       class="btn btn-sm btn-success">Đăng ký</a>
+                }
             </td>
         </tr>
     }

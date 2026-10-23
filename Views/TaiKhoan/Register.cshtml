@@ -1,45 +1,66 @@
 ﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "Đăng ký";
+    ViewData["BodyClass"] = "auth-page";
 }
 
-<div class="col-md-5 mx-auto mt-4">
-    <h3 class="mb-3">Đăng ký tài khoản</h3>
+<div class="auth-card">
+    <div class="text-center mb-4">
+        <div class="auth-logo"><i class="bi bi-person-plus-fill"></i></div>
+        <h3 class="mb-1">Tạo tài khoản</h3>
+        <p class="text-muted mb-0">Đăng ký để bắt đầu gửi xe trực tuyến</p>
+    </div>
 
     <form asp-action="Register" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
 
         <div class="mb-3">
             <label asp-for="TenDangNhap" class="form-label"></label>
-            <input asp-for="TenDangNhap" class="form-control" />
-            <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <input asp-for="TenDangNhap" class="form-control" />
+            </div>
+            <span asp-validation-for="TenDangNhap" class="text-danger small"></span>
         </div>
         <div class="mb-3">
             <label asp-for="HoTen" class="form-label"></label>
-            <input asp-for="HoTen" class="form-control" />
-            <span asp-validation-for="HoTen" class="text-danger"></span>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                <input asp-for="HoTen" class="form-control" />
+            </div>
+            <span asp-validation-for="HoTen" class="text-danger small"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Email" class="form-label"></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <span asp-validation-for="Email" class="text-danger small"></span>
         </div>
         <div class="mb-3">
             <label asp-for="MatKhau" class="form-label"></label>
-            <input asp-for="MatKhau" class="form-control" />
-            <span asp-validation-for="MatKhau" class="text-danger"></span>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input asp-for="MatKhau" class="form-control" />
+                <button type="button" class="btn btn-outline-secondary" data-toggle-pass="MatKhau"><i class="bi bi-eye"></i></button>
+            </div>
+            <span asp-validation-for="MatKhau" class="text-danger small"></span>
         </div>
-        <div class="mb-3">
+        <div class="mb-4">
             <label asp-for="NhapLaiMatKhau" class="form-label"></label>
-            <input asp-for="NhapLaiMatKhau" class="form-control" />
-            <span asp-validation-for="NhapLaiMatKhau" class="text-danger"></span>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                <input asp-for="NhapLaiMatKhau" class="form-control" />
+                <button type="button" class="btn btn-outline-secondary" data-toggle-pass="NhapLaiMatKhau"><i class="bi bi-eye"></i></button>
+            </div>
+            <span asp-validation-for="NhapLaiMatKhau" class="text-danger small"></span>
         </div>
 
-        <button class="btn btn-primary">Đăng ký</button>
-        <a asp-action="Login" class="btn btn-link">Đã có tài khoản</a>
+        <button class="btn btn-primary w-100 py-2">Đăng ký</button>
     </form>
+
+    <p class="text-center mt-3 mb-0 text-muted">Đã có tài khoản? <a asp-action="Login" class="fw-semibold">Đăng nhập</a></p>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

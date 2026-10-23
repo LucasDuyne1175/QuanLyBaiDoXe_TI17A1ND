@@ -1,0 +1,94 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.ViewModels.DangKyGuiXeViewModel
+@{
+    ViewData["Title"] = "Đăng ký gửi xe";
+    var phuongTiens = (List<QuanLyBaiDoXe_TI17A1ND.Models.PhuongTien>)ViewBag.PhuongTiens;
+    var viTris = (List<QuanLyBaiDoXe_TI17A1ND.Models.ViTriDoXe>)ViewBag.ViTris;
+    var minNow = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+}
+
+<h3 class="mb-3">Đăng ký gửi xe</h3>
+
+@if (!phuongTiens.Any())
+{
+    <div class="alert alert-warning">
+        Bạn chưa có phương tiện nào đang hoạt động.
+        <a asp-controller="PhuongTien" asp-action="Create">Thêm phương tiện</a> trước khi đăng ký.
+    </div>
+}
+
+<form asp-action="DangKy" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="MaPhuongTien" class="form-label"></label>
+        <select name="MaPhuongTien" id="MaPhuongTien" class="form-select">
+            <option value="0" data-loai="0" data-gia="0">-- Chọn phương tiện --</option>
+            @foreach (var p in phuongTiens)
+            {
+                <option value="@p.MaPhuongTien" data-loai="@p.MaLoaiPhuongTien"
+                        data-gia="@p.LoaiPhuongTien!.DonGiaTheoGio.ToString("N0")"
+                        selected="@(Model.MaPhuongTien == p.MaPhuongTien)">
+                    @p.BienSoXe (@p.LoaiPhuongTien!.TenLoaiPhuongTien)
+                </option>
+            }
+        </select>
+        <span asp-validation-for="MaPhuongTien" class="text-danger"></span>
+        <div class="form-text">Đơn giá: <b id="donGia">-</b> đ/giờ (do hệ thống tính, không thể thay đổi)</div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MaViTri" class="form-label"></label>
+        <select name="MaViTri" id="MaViTri" class="form-select">
+            <option value="0" data-loai="0">-- Chọn vị trí đỗ --</option>
+            @foreach (var v in viTris)
+            {
+                <option value="@v.MaViTri" data-loai="@v.MaLoaiPhuongTien"
+                        selected="@(Model.MaViTri == v.MaViTri)">
+                    @v.TenViTri - @v.KhuVuc, tầng @v.Tang (@v.LoaiPhuongTien!.TenLoaiPhuongTien)
+                </option>
+            }
+        </select>
+        <span asp-validation-for="MaViTri" class="text-danger"></span>
+        <div class="form-text">Chỉ hiện các vị trí phù hợp với loại phương tiện đã chọn.</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="ThoiGianDuKienVao" class="form-label"></label>
+            <input asp-for="ThoiGianDuKienVao" type="datetime-local" min="@minNow" class="form-control" />
+            <span asp-validation-for="ThoiGianDuKienVao" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="ThoiGianDuKienRa" class="form-label"></label>
+            <input asp-for="ThoiGianDuKienRa" type="datetime-local" min="@minNow" class="form-control" />
+            <span asp-validation-for="ThoiGianDuKienRa" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" disabled="@(!phuongTiens.Any())">Đăng ký gửi xe</button>
+    <a asp-action="LichSu" class="btn btn-secondary">Lịch sử gửi xe</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const selXe = document.getElementById('MaPhuongTien');
+        const selViTri = document.getElementById('MaViTri');
+        const donGia = document.getElementById('donGia');
+
+        function locViTri() {
+            const opt = selXe.options[selXe.selectedIndex];
+            const loai = opt.dataset.loai;
+            donGia.textContent = loai === '0' ? '-' : opt.dataset.gia;
+
+            for (const o of selViTri.options) {
+                const hop = o.value === '0' || loai === '0' || o.dataset.loai === loai;
+                o.hidden = !hop;
+                o.disabled = !hop;
+            }
+            if (selViTri.selectedOptions[0]?.disabled) selViTri.value = '0';
+        }
+        selXe.addEventListener('change', locViTri);
+        locViTri();
+    </script>
+}

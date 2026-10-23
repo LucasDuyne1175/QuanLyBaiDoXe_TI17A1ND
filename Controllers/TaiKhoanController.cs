@@ -53,8 +53,8 @@ public class TaiKhoanController : Controller
             return Redirect(returnUrl);
 
         return tk.VaiTro == "Admin"
-            ? RedirectToAction("Index", "LoaiPhuongTien")
-            : RedirectToAction("Index", "Home");
+    ? RedirectToAction("Index", "Dashboard")
+    : RedirectToAction("Index", "Home");
     }
 
     public IActionResult Logout()

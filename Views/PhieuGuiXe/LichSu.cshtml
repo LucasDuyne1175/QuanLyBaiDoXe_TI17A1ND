@@ -1,0 +1,72 @@
+﻿@model List<QuanLyBaiDoXe_TI17A1ND.Models.PhieuGuiXe>
+@{
+    ViewData["Title"] = "Lịch sử gửi xe";
+    var dem = (Dictionary<string, int>)ViewBag.Dem;
+    string? tt = ViewBag.TrangThai;
+    int tong = dem.Values.Sum();
+    int Dem(string k) => dem.TryGetValue(k, out var n) ? n : 0;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Lịch sử gửi xe</h3>
+    <a asp-action="DangKy" class="btn btn-success">+ Đăng ký gửi xe</a>
+</div>
+
+@if (TempData["Msg"] != null) { <div class="alert alert-success">@TempData["Msg"]</div> }
+@if (TempData["Err"] != null) { <div class="alert alert-danger">@TempData["Err"]</div> }
+
+<ul class="nav nav-tabs mb-3">
+    <li class="nav-item"><a class="nav-link @(string.IsNullOrEmpty(tt) ? "active" : "")" asp-action="LichSu">Tất cả (@tong)</a></li>
+    @foreach (var s in QuanLyBaiDoXe_TI17A1ND.Models.TrangThaiPhieu.All)
+    {
+        <li class="nav-item">
+            <a class="nav-link @(tt == s ? "active" : "")" asp-action="LichSu" asp-route-trangThai="@s">@s (@Dem(s))</a>
+        </li>
+    }
+</ul>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Mã</th><th>Biển số</th><th>Vị trí</th><th>Dự kiến vào</th><th>Dự kiến ra</th>
+            <th class="text-end">Đơn giá/giờ</th><th class="text-end">Thành tiền</th>
+            <th>Trạng thái</th><th style="width:170px">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td colspan="9" class="text-center text-muted">Chưa có phiếu nào.</td></tr>
+    }
+    @foreach (var p in Model)
+    {
+        var badge = p.TrangThai switch
+        {
+            "Chờ xác nhận" => "bg-warning text-dark",
+            "Đang gửi" => "bg-primary",
+            "Đã lấy xe" => "bg-success",
+            _ => "bg-secondary"
+        };
+        <tr>
+            <td>#@p.MaPhieu</td>
+            <td>@p.PhuongTien?.BienSoXe</td>
+            <td>@p.ViTriDoXe?.TenViTri</td>
+            <td>@p.ThoiGianDuKienVao.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@p.ThoiGianDuKienRa.ToString("dd/MM/yyyy HH:mm")</td>
+            <td class="text-end">@p.DonGiaTheoGio.ToString("N0") đ</td>
+            <td class="text-end">@(p.ThanhTien.HasValue ? p.ThanhTien.Value.ToString("N0") + " đ" : "-")</td>
+            <td><span class="badge @badge">@p.TrangThai</span></td>
+            <td>
+                <a asp-action="ChiTiet" asp-route-id="@p.MaPhieu" class="btn btn-sm btn-info">Chi tiết</a>
+                @if (p.TrangThai == "Chờ xác nhận")
+                {
+                    <form asp-action="Huy" asp-route-id="@p.MaPhieu" method="post" class="d-inline"
+                          onsubmit="return confirm('Hủy phiếu #@p.MaPhieu?');">
+                        <button class="btn btn-sm btn-outline-danger">Hủy</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

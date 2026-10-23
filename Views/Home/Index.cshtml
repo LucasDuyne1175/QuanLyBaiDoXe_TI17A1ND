@@ -1,8 +1,97 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using QuanLyBaiDoXe_TI17A1ND.Models
+@{
+    ViewData["Title"] = "Trang chủ";
+    var vaiTro = Context.Session.GetString("VaiTro");
+    var hoTen = Context.Session.GetString("HoTen");
+    int conTrong = ViewBag.ConTrong;
+    int tong = Math.Max(1, (int)ViewBag.TongViTri);
+    var bangGia = (List<LoaiPhuongTien>)ViewBag.BangGia;
+
+    var thaoTac = vaiTro == "Admin"
+        ? new[]
+        {
+            (Icon: "bi-speedometer2", Tieu: "Dashboard", Mo: "Tổng quan số liệu bãi xe", Ctrl: "Dashboard", Act: "Index", Tone: "tone-indigo"),
+            (Icon: "bi-receipt", Tieu: "Phiếu gửi xe", Mo: "Xác nhận xe vào, xe ra, tính phí", Ctrl: "QuanLyPhieu", Act: "Index", Tone: "tone-amber"),
+            (Icon: "bi-grid-3x3-gap", Tieu: "Vị trí đỗ xe", Mo: "Quản lý và tra cứu vị trí", Ctrl: "ViTriDoXe", Act: "Index", Tone: "tone-blue"),
+            (Icon: "bi-bar-chart-line", Tieu: "Thống kê", Mo: "Lượt gửi và doanh thu theo tháng", Ctrl: "ThongKe", Act: "Index", Tone: "tone-green")
+        }
+        : new[]
+        {
+            (Icon: "bi-search", Tieu: "Tra cứu vị trí", Mo: "Xem vị trí còn trống theo loại xe", Ctrl: "ViTriDoXe", Act: "Index", Tone: "tone-blue"),
+            (Icon: "bi-plus-circle", Tieu: "Đăng ký gửi xe", Mo: "Chọn xe, vị trí và thời gian", Ctrl: "PhieuGuiXe", Act: "DangKy", Tone: "tone-green"),
+            (Icon: "bi-car-front", Tieu: "Xe của tôi", Mo: "Quản lý phương tiện của bạn", Ctrl: "PhuongTien", Act: "Index", Tone: "tone-purple"),
+            (Icon: "bi-clock-history", Tieu: "Lịch sử gửi xe", Mo: "Theo dõi phiếu và chi phí", Ctrl: "PhieuGuiXe", Act: "LichSu", Tone: "tone-amber")
+        };
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<section class="hero mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <span class="hero-badge"><i class="bi bi-p-circle-fill me-1"></i>Hệ thống bãi đỗ xe</span>
+            <h1 class="mb-3">
+                @if (hoTen != null) { <text>Xin chào, @hoTen!</text> }
+                else { <text>Gửi xe nhanh chóng,<br />an toàn và minh bạch</text> }
+            </h1>
+            <p class="mb-4 opacity-75">Đăng ký chỗ đỗ trực tuyến, theo dõi lượt gửi và chi phí theo giờ rõ ràng, không cần chờ đợi tại cổng.</p>
+            @if (hoTen == null)
+            {
+                <a asp-controller="TaiKhoan" asp-action="Login" class="btn btn-light btn-lg me-2">Đăng nhập</a>
+                <a asp-controller="TaiKhoan" asp-action="Register" class="btn btn-outline-light btn-lg">Đăng ký</a>
+            }
+            else if (vaiTro == "Admin")
+            {
+                <a asp-controller="Dashboard" asp-action="Index" class="btn btn-light btn-lg">Vào Dashboard</a>
+            }
+            else
+            {
+                <a asp-controller="PhieuGuiXe" asp-action="DangKy" class="btn btn-light btn-lg">Đăng ký gửi xe ngay</a>
+            }
+        </div>
+        <div class="col-lg-5">
+            <div class="hero-stat">
+                <div class="small opacity-75 mb-1">Vị trí còn trống hiện tại</div>
+                <div class="big mb-2"><span data-count="@conTrong">@conTrong</span><span class="fs-4 opacity-75"> / @tong</span></div>
+                <div class="progress"><div class="progress-bar" style="width:@(conTrong * 100 / tong)%"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (hoTen != null)
+{
+    <h5 class="mb-3">Truy cập nhanh</h5>
+    <div class="row g-3 mb-4">
+        @foreach (var t in thaoTac)
+        {
+            <div class="col-sm-6 col-lg-3">
+                <a class="action-card" asp-controller="@t.Ctrl" asp-action="@t.Act">
+                    <div class="stat-icon @t.Tone"><i class="bi @t.Icon"></i></div>
+                    <h6>@t.Tieu</h6>
+                    <p>@t.Mo</p>
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="row g-3 mb-4">
+        <div class="col-md-4"><div class="action-card"><div class="stat-icon tone-green"><i class="bi bi-phone"></i></div><h6>Đăng ký trực tuyến</h6><p>Chọn vị trí và thời gian gửi xe ngay trên web.</p></div></div>
+        <div class="col-md-4"><div class="action-card"><div class="stat-icon tone-blue"><i class="bi bi-geo-alt"></i></div><h6>Tra cứu chỗ trống</h6><p>Lọc theo loại xe, khu vực, tầng và trạng thái.</p></div></div>
+        <div class="col-md-4"><div class="action-card"><div class="stat-icon tone-amber"><i class="bi bi-cash-coin"></i></div><h6>Tính phí minh bạch</h6><p>Đơn giá theo giờ rõ ràng, hệ thống tự tính thành tiền.</p></div></div>
+    </div>
+}
+
+<h5 class="mb-3">Bảng giá gửi xe theo giờ</h5>
+<div class="row g-3">
+    @foreach (var l in bangGia)
+    {
+        <div class="col-md-4">
+            <div class="price-card">
+                <div class="text-muted mb-1">@l.TenLoaiPhuongTien</div>
+                <div class="price">@l.DonGiaTheoGio.ToString("N0") đ</div>
+                <small class="text-muted">mỗi giờ &middot; làm tròn lên theo giờ</small>
+            </div>
+        </div>
+    }
 </div>

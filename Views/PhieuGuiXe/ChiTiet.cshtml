@@ -1,0 +1,31 @@
+﻿@model QuanLyBaiDoXe_TI17A1ND.Models.PhieuGuiXe
+@{ ViewData["Title"] = "Chi tiết phiếu gửi xe"; }
+
+<h3 class="mb-3">Phiếu gửi xe #@Model.MaPhieu</h3>
+
+<dl class="row col-md-8">
+    <dt class="col-sm-4">Phương tiện</dt>
+    <dd class="col-sm-8">@Model.PhuongTien?.BienSoXe (@Model.PhuongTien?.LoaiPhuongTien?.TenLoaiPhuongTien)</dd>
+
+    <dt class="col-sm-4">Vị trí đỗ</dt>
+    <dd class="col-sm-8">@Model.ViTriDoXe?.TenViTri - @Model.ViTriDoXe?.KhuVuc, tầng @Model.ViTriDoXe?.Tang</dd>
+
+    <dt class="col-sm-4">Ngày đăng ký</dt><dd class="col-sm-8">@Model.NgayDangKy.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-4">Dự kiến vào</dt><dd class="col-sm-8">@Model.ThoiGianDuKienVao.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-4">Dự kiến ra</dt><dd class="col-sm-8">@Model.ThoiGianDuKienRa.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-4">Vào thực tế</dt><dd class="col-sm-8">@(Model.ThoiGianVaoThucTe?.ToString("dd/MM/yyyy HH:mm") ?? "-")</dd>
+    <dt class="col-sm-4">Ra thực tế</dt><dd class="col-sm-8">@(Model.ThoiGianRaThucTe?.ToString("dd/MM/yyyy HH:mm") ?? "-")</dd>
+    <dt class="col-sm-4">Đơn giá theo giờ</dt><dd class="col-sm-8">@Model.DonGiaTheoGio.ToString("N0") đ</dd>
+    <dt class="col-sm-4">Thành tiền</dt>
+    <dd class="col-sm-8">@(Model.ThanhTien.HasValue ? Model.ThanhTien.Value.ToString("N0") + " đ" : "Chưa tính (tính khi xe ra)")</dd>
+    <dt class="col-sm-4">Trạng thái</dt><dd class="col-sm-8"><b>@Model.TrangThai</b></dd>
+</dl>
+
+@if (Model.TrangThai == "Chờ xác nhận")
+{
+    <form asp-action="Huy" asp-route-id="@Model.MaPhieu" method="post" class="d-inline"
+          onsubmit="return confirm('Hủy phiếu này?');">
+        <button class="btn btn-danger">Hủy phiếu</button>
+    </form>
+}
+<a asp-action="LichSu" class="btn btn-secondary">Quay lại</a>
