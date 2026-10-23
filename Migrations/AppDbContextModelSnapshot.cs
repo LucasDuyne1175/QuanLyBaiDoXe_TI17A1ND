@@ -371,6 +371,331 @@ namespace QuanLyBaiDoXe_TI17A1ND.Migrations
                     b.HasIndex("MaViTri");
 
                     b.ToTable("PhieuGuiXes");
+
+                    b.HasData(
+                        new
+                        {
+                            MaPhieu = 1,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 1,
+                            MaViTri = 1,
+                            NgayDangKy = new DateTime(2026, 8, 4, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 9000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 8, 5, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 8, 5, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 8, 5, 10, 33, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 8, 5, 8, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 2,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 2,
+                            MaViTri = 1,
+                            NgayDangKy = new DateTime(2026, 8, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 3000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 8, 12, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 8, 12, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 8, 12, 10, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 8, 12, 9, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 3,
+                            DonGiaTheoGio = 20000m,
+                            MaPhuongTien = 13,
+                            MaViTri = 13,
+                            NgayDangKy = new DateTime(2026, 8, 17, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 100000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 8, 18, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 8, 18, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 8, 18, 15, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 8, 18, 10, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 4,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 9,
+                            MaViTri = 11,
+                            NgayDangKy = new DateTime(2026, 8, 24, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 9000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 8, 25, 16, 5, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 8, 25, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 8, 25, 16, 8, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 8, 25, 14, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 5,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 1,
+                            MaViTri = 1,
+                            NgayDangKy = new DateTime(2026, 9, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 12000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 2, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 2, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 9, 2, 12, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 9, 2, 8, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 6,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 10,
+                            MaViTri = 1,
+                            NgayDangKy = new DateTime(2026, 9, 5, 7, 30, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 6000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 6, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 6, 7, 30, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 9, 6, 9, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 9, 6, 7, 33, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 7,
+                            DonGiaTheoGio = 20000m,
+                            MaPhuongTien = 14,
+                            MaViTri = 13,
+                            NgayDangKy = new DateTime(2026, 9, 9, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 60000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 10, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 10, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 9, 10, 12, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 9, 10, 9, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 8,
+                            DonGiaTheoGio = 2000m,
+                            MaPhuongTien = 18,
+                            MaViTri = 20,
+                            NgayDangKy = new DateTime(2026, 9, 13, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 16000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 14, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 14, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 9, 14, 16, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 9, 14, 8, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 9,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 11,
+                            MaViTri = 6,
+                            NgayDangKy = new DateTime(2026, 9, 17, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 3000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 18, 17, 45, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 18, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 9, 18, 17, 48, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 9, 18, 17, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 10,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 2,
+                            MaViTri = 1,
+                            NgayDangKy = new DateTime(2026, 9, 21, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 30000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 22, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 22, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 9, 22, 18, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 9, 22, 8, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 11,
+                            DonGiaTheoGio = 20000m,
+                            MaPhuongTien = 15,
+                            MaViTri = 17,
+                            NgayDangKy = new DateTime(2026, 9, 26, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 40000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 27, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 27, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 9, 27, 15, 3, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 9, 27, 13, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 12,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 1,
+                            MaViTri = 1,
+                            NgayDangKy = new DateTime(2026, 10, 2, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 12000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 10, 3, 11, 20, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 3, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 10, 3, 11, 23, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 10, 3, 8, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 13,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 12,
+                            MaViTri = 12,
+                            NgayDangKy = new DateTime(2026, 10, 7, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 6000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 10, 8, 19, 15, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 8, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 10, 8, 19, 18, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 10, 8, 18, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 14,
+                            DonGiaTheoGio = 20000m,
+                            MaPhuongTien = 13,
+                            MaViTri = 13,
+                            NgayDangKy = new DateTime(2026, 10, 11, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 140000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 10, 12, 15, 30, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 12, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 10, 12, 15, 33, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 10, 12, 8, 33, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 15,
+                            DonGiaTheoGio = 2000m,
+                            MaPhuongTien = 19,
+                            MaViTri = 20,
+                            NgayDangKy = new DateTime(2026, 10, 14, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThanhTien = 2000m,
+                            ThoiGianDuKienRa = new DateTime(2026, 10, 15, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 15, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianRaThucTe = new DateTime(2026, 10, 15, 10, 33, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 10, 15, 10, 3, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã lấy xe"
+                        },
+                        new
+                        {
+                            MaPhieu = 16,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 7,
+                            MaViTri = 4,
+                            NgayDangKy = new DateTime(2026, 9, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 9, 20, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 9, 20, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã hủy"
+                        },
+                        new
+                        {
+                            MaPhieu = 17,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 8,
+                            MaViTri = 10,
+                            NgayDangKy = new DateTime(2026, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 10, 5, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 5, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã hủy"
+                        },
+                        new
+                        {
+                            MaPhieu = 18,
+                            DonGiaTheoGio = 20000m,
+                            MaPhuongTien = 17,
+                            MaViTri = 16,
+                            NgayDangKy = new DateTime(2026, 10, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 10, 10, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 10, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã hủy"
+                        },
+                        new
+                        {
+                            MaPhieu = 19,
+                            DonGiaTheoGio = 2000m,
+                            MaPhuongTien = 19,
+                            MaViTri = 19,
+                            NgayDangKy = new DateTime(2026, 10, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 10, 14, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 14, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đã hủy"
+                        },
+                        new
+                        {
+                            MaPhieu = 20,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 3,
+                            MaViTri = 2,
+                            NgayDangKy = new DateTime(2026, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 11, 30, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 19, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 10, 19, 8, 5, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đang gửi"
+                        },
+                        new
+                        {
+                            MaPhieu = 21,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 4,
+                            MaViTri = 9,
+                            NgayDangKy = new DateTime(2026, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 11, 30, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 19, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 10, 19, 8, 5, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đang gửi"
+                        },
+                        new
+                        {
+                            MaPhieu = 22,
+                            DonGiaTheoGio = 20000m,
+                            MaPhuongTien = 15,
+                            MaViTri = 14,
+                            NgayDangKy = new DateTime(2026, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 11, 30, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 10, 19, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianVaoThucTe = new DateTime(2026, 10, 19, 8, 5, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Đang gửi"
+                        },
+                        new
+                        {
+                            MaPhieu = 23,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 5,
+                            MaViTri = 3,
+                            NgayDangKy = new DateTime(2026, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 11, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 11, 5, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Chờ xác nhận"
+                        },
+                        new
+                        {
+                            MaPhieu = 24,
+                            DonGiaTheoGio = 3000m,
+                            MaPhuongTien = 6,
+                            MaViTri = 3,
+                            NgayDangKy = new DateTime(2026, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 11, 5, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 11, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Chờ xác nhận"
+                        },
+                        new
+                        {
+                            MaPhieu = 25,
+                            DonGiaTheoGio = 20000m,
+                            MaPhuongTien = 16,
+                            MaViTri = 15,
+                            NgayDangKy = new DateTime(2026, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienRa = new DateTime(2026, 11, 6, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianDuKienVao = new DateTime(2026, 11, 6, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            TrangThai = "Chờ xác nhận"
+                        });
                 });
 
             modelBuilder.Entity("QuanLyBaiDoXe_TI17A1ND.Models.PhuongTien", b =>
@@ -896,7 +1221,7 @@ namespace QuanLyBaiDoXe_TI17A1ND.Migrations
                             MoTa = "Vị trí đỗ xe máy tầng 1",
                             Tang = 1,
                             TenViTri = "A02",
-                            TrangThai = "Còn trống"
+                            TrangThai = "Đang sử dụng"
                         },
                         new
                         {
@@ -966,7 +1291,7 @@ namespace QuanLyBaiDoXe_TI17A1ND.Migrations
                             MoTa = "Vị trí đỗ xe máy tầng 2",
                             Tang = 2,
                             TenViTri = "B01",
-                            TrangThai = "Còn trống"
+                            TrangThai = "Đang sử dụng"
                         },
                         new
                         {
@@ -1016,7 +1341,7 @@ namespace QuanLyBaiDoXe_TI17A1ND.Migrations
                             MoTa = "Vị trí đỗ ô tô",
                             Tang = 1,
                             TenViTri = "C02",
-                            TrangThai = "Còn trống"
+                            TrangThai = "Đang sử dụng"
                         },
                         new
                         {

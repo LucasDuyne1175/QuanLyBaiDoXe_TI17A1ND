@@ -69,6 +69,7 @@ public class AppDbContext : DbContext
         SeedLoaiPhuongTien(mb);
         SeedViTri(mb);
         SeedChuVaPhuongTien(mb);
+        SeedPhieuGuiXe(mb);
     }
 
     private static void SeedTaiKhoan(ModelBuilder mb)
@@ -123,7 +124,9 @@ public class AppDbContext : DbContext
                     Tang = tang,
                     MaLoaiPhuongTien = maLoai,
                     MoTa = moTa,
-                    TrangThai = (ten == "A05" || ten == "C06") ? TrangThaiViTri.TamNgung : TrangThaiViTri.ConTrong
+                    TrangThai = (ten == "A05" || ten == "C06") ? TrangThaiViTri.TamNgung
+                              : (ten == "A02" || ten == "B01" || ten == "C02") ? TrangThaiViTri.DangSuDung
+                              : TrangThaiViTri.ConTrong
                 });
             }
         }
@@ -176,5 +179,87 @@ public class AppDbContext : DbContext
             });
         }
         mb.Entity<PhuongTien>().HasData(pts);
+    }
+    private static void SeedPhieuGuiXe(ModelBuilder mb)
+    {
+        // Mã vị trí: A01-A08 = 1-8, B01-B04 = 9-12, C01-C06 = 13-18, D01-D02 = 19-20
+        decimal Gia(int pt) => pt <= 12 ? 3000m : pt <= 17 ? 20000m : 2000m;
+        var ds = new List<PhieuGuiXe>();
+        int id = 1;
+
+        // Phiếu đã hoàn tất: xe vào trễ 3 phút so với dự kiến, ở đúng số phút dự kiến
+        void DaLayXe(int pt, int vt, DateTime vao, int phutGui)
+        {
+            var vaoTT = vao.AddMinutes(3);
+            var raTT = vaoTT.AddMinutes(phutGui);
+            int gio = TinhPhiHelper.SoGioTinhPhi(vaoTT, raTT);
+            ds.Add(new PhieuGuiXe
+            {
+                MaPhieu = id++,
+                MaPhuongTien = pt,
+                MaViTri = vt,
+                NgayDangKy = vao.AddDays(-1),
+                ThoiGianDuKienVao = vao,
+                ThoiGianDuKienRa = vao.AddMinutes(phutGui),
+                ThoiGianVaoThucTe = vaoTT,
+                ThoiGianRaThucTe = raTT,
+                DonGiaTheoGio = Gia(pt),
+                ThanhTien = TinhPhiHelper.ThanhTien(gio, Gia(pt)),
+                TrangThai = TrangThaiPhieu.DaLayXe
+            });
+        }
+
+        void Khac(int pt, int vt, DateTime dangKy, DateTime vao, DateTime ra, string tt, DateTime? vaoTT = null)
+        {
+            ds.Add(new PhieuGuiXe
+            {
+                MaPhieu = id++,
+                MaPhuongTien = pt,
+                MaViTri = vt,
+                NgayDangKy = dangKy,
+                ThoiGianDuKienVao = vao,
+                ThoiGianDuKienRa = ra,
+                ThoiGianVaoThucTe = vaoTT,
+                DonGiaTheoGio = Gia(pt),
+                TrangThai = tt
+            });
+        }
+
+        // ----- 15 phiếu Đã lấy xe (tháng 8, 9, 10/2026) -----
+        DaLayXe(1, 1, new DateTime(2026, 8, 5, 8, 0, 0), 150);
+        DaLayXe(2, 1, new DateTime(2026, 8, 12, 9, 0, 0), 60);
+        DaLayXe(13, 13, new DateTime(2026, 8, 18, 10, 0, 0), 300);
+        DaLayXe(9, 11, new DateTime(2026, 8, 25, 14, 0, 0), 125);
+        DaLayXe(1, 1, new DateTime(2026, 9, 2, 8, 0, 0), 240);
+        DaLayXe(10, 1, new DateTime(2026, 9, 6, 7, 30, 0), 90);
+        DaLayXe(14, 13, new DateTime(2026, 9, 10, 9, 0, 0), 180);
+        DaLayXe(18, 20, new DateTime(2026, 9, 14, 8, 0, 0), 480);
+        DaLayXe(11, 6, new DateTime(2026, 9, 18, 17, 0, 0), 45);
+        DaLayXe(2, 1, new DateTime(2026, 9, 22, 8, 0, 0), 600);
+        DaLayXe(15, 17, new DateTime(2026, 9, 27, 13, 0, 0), 120);
+        DaLayXe(1, 1, new DateTime(2026, 10, 3, 8, 0, 0), 200);
+        DaLayXe(12, 12, new DateTime(2026, 10, 8, 18, 0, 0), 75);
+        DaLayXe(13, 13, new DateTime(2026, 10, 12, 8, 30, 0), 420);
+        DaLayXe(19, 20, new DateTime(2026, 10, 15, 10, 0, 0), 30);
+
+        // ----- 4 phiếu Đã hủy -----
+        Khac(7, 4, new DateTime(2026, 9, 19), new DateTime(2026, 9, 20, 8, 0, 0), new DateTime(2026, 9, 20, 12, 0, 0), TrangThaiPhieu.DaHuy);
+        Khac(8, 10, new DateTime(2026, 10, 4), new DateTime(2026, 10, 5, 9, 0, 0), new DateTime(2026, 10, 5, 11, 0, 0), TrangThaiPhieu.DaHuy);
+        Khac(17, 16, new DateTime(2026, 10, 9), new DateTime(2026, 10, 10, 8, 0, 0), new DateTime(2026, 10, 10, 18, 0, 0), TrangThaiPhieu.DaHuy);
+        Khac(19, 19, new DateTime(2026, 10, 13), new DateTime(2026, 10, 14, 13, 0, 0), new DateTime(2026, 10, 14, 15, 0, 0), TrangThaiPhieu.DaHuy);
+
+        // ----- 3 phiếu Đang gửi (vị trí A02, B01, C02 là "Đang sử dụng") -----
+        var vao19 = new DateTime(2026, 10, 19, 8, 0, 0);
+        var ra30 = new DateTime(2026, 11, 30, 18, 0, 0);
+        Khac(3, 2, new DateTime(2026, 10, 18), vao19, ra30, TrangThaiPhieu.DangGui, vao19.AddMinutes(5));
+        Khac(4, 9, new DateTime(2026, 10, 18), vao19, ra30, TrangThaiPhieu.DangGui, vao19.AddMinutes(5));
+        Khac(15, 14, new DateTime(2026, 10, 18), vao19, ra30, TrangThaiPhieu.DangGui, vao19.AddMinutes(5));
+
+        // ----- 3 phiếu Chờ xác nhận (tháng 11/2026; 2 phiếu A03 nối tiếp nhau, không trùng) -----
+        Khac(5, 3, new DateTime(2026, 10, 18), new DateTime(2026, 11, 5, 8, 0, 0), new DateTime(2026, 11, 5, 12, 0, 0), TrangThaiPhieu.ChoXacNhan);
+        Khac(6, 3, new DateTime(2026, 10, 18), new DateTime(2026, 11, 5, 12, 0, 0), new DateTime(2026, 11, 5, 16, 0, 0), TrangThaiPhieu.ChoXacNhan);
+        Khac(16, 15, new DateTime(2026, 10, 19), new DateTime(2026, 11, 6, 9, 0, 0), new DateTime(2026, 11, 6, 17, 0, 0), TrangThaiPhieu.ChoXacNhan);
+
+        mb.Entity<PhieuGuiXe>().HasData(ds);
     }
 }
